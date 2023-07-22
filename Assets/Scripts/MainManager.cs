@@ -60,6 +60,9 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+        //All bricks cleared = game over
+        if(GameObject.FindGameObjectsWithTag("Brick").Length == 0) GameOver();
     }
 
     void AddPoint(int point)
@@ -72,5 +75,12 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if(m_Points > SharedManager.Instance.highscore) 
+        {
+            SharedManager.Instance.highscoreName = SharedManager.Instance.playerName;
+            SharedManager.Instance.highscore = m_Points;
+            SharedManager.Instance.SaveHighscore();
+        }
     }
 }
